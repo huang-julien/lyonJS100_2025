@@ -1,0 +1,21 @@
+{
+  "name": "tout_sur_les_nuxt_island",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "slidev build",
+    "dev": "slidev --open",
+    "export": "slidev export"
+  },
+  "dependencies": {
+    "@iconify-json/logos": "^1.2.4",
+    "@slidev/cli": "^51.1.0",
+    "@slidev/theme-default": "latest",
+    "@slidev/theme-seriph": "latest",
+    "@vueuse/core": "^12.5.0",
+    "ofetch": "^1.4.1",
+    "partykit": "^0.0.111",
+    "sass-embedded": "^1.83.4",
+    "vue": "^3.5.13"
+  }
+}
