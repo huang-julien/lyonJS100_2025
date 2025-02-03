@@ -35,6 +35,9 @@ Julien Huang
 
 ## Et je suis fan d'open-source
 
+   <img v-drag="[36,171,225,225]" src="/assets/pfp.jpg" class="rounded-full" />
+ 
+
 <div>
 
 Mainteneur:  
@@ -79,6 +82,8 @@ nuxt-applicationinsights
 
 
 ---
+layout: intro
+---
 
 # Qui a déjà utilisé Nuxt ou Vue ?
 
@@ -122,19 +127,47 @@ layout: intro
 
 # Les meta-frameworks
 
-<img  class="w-100 mx-auto rounded-xl" src="/assets/the_rising_of_metaframeworks.jpg"  />
+<img class="w-100 mx-auto rounded-xl" src="/assets/the_rising_of_metaframeworks.jpg"  />
 
 ---
 
 # AstroJS et l'architecture en îlot
 
+<img class="w-100 mx-auto rounded-xl" src="/assets/island-house.jpg" />
+
 ---
 
 # NextJS et les server components
 
+<!--
+
+content type: x-text/component
+
+-->
+
 ---
 
 # Et NuxtJS dans tout ça ?
+
+---
+
+# La différence entre les Islands et les server components avec Nuxt
+
+```bash
+|- components
+  |-- islands
+  |  |-- MyIsland.vue
+  |-- MyServerComponent.server.ts
+```
+
+```html
+<template>
+  <div>
+    <NuxtIsland name="MyIsland" />
+    <MyServerComponent />
+  </div>
+</template>
+```
 
 ---
 layout: intro
@@ -145,10 +178,6 @@ layout: intro
 ---
 
 # Un composant et une API
-
-
-
----
 
 ---
 layout: intro
@@ -162,7 +191,7 @@ layout: intro
 
 ::window{filename="components/island/YourIsland.vue"}
 
-```vue
+```html
 <template>
  <!---->
 </template>
@@ -193,7 +222,42 @@ layout: intro
 # Certaines features ne sont compatible qu'avec les Single File Components (*.vue)
 
 ---
+layout: intro
+---
 
 # Statut des islands
+
+---
+
+# Le rendu statique avec les slots
+
+### Statut: stable
+
+```ts twoslash
+import { defineNuxtConfig } from "nuxt/config"
+
+export default defineNuxtConfig({
+  experimental: {
+    // activé par défaut
+    componentIslands: true
+  }
+})
+```
+
+---
+
+# Charger des composants à l'intérieur des Islands
+
+```ts twoslash
+import { defineNuxtConfig } from "nuxt/config"
+
+export default defineNuxtConfig({
+  experimental: {
+    componentIslands: {
+      selectiveClient: true
+    }
+  }
+})
+```
 
 ---
