@@ -170,6 +170,25 @@ content type: x-text/component
 ```
 
 ---
+layout: two-cols
+---
+
+# `NuxtIsland`
+
+- bas niveau
+- complètement configurable
+
+::right
+
+# Les server components
+
+- Haut niveau
+- typé 
+
+
+
+
+---
 layout: intro
 ---
 
@@ -248,6 +267,8 @@ export default defineNuxtConfig({
 
 # Charger des composants à l'intérieur des Islands
 
+### Statut: experimental
+
 ```ts twoslash
 import { defineNuxtConfig } from "nuxt/config"
 
@@ -261,3 +282,24 @@ export default defineNuxtConfig({
 ```
 
 ---
+
+# Avoir une page complète en island
+
+### Statut: stable
+
+```html
+<template>
+  <div>
+    <UPageBody prose>
+      <ContentRenderer :value="page" />
+    </UPageBody>  
+  </div>
+</template>
+
+<script setup lang="ts">
+const { data: page } = await useAsyncData(props.path, () => queryContent(props.path).findOne())
+if (!page.value) {
+  throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
+}
+</script>
+```
