@@ -10,14 +10,14 @@ import { useWebSocket } from '@vueuse/core'
 const props = defineProps<{
   answer: string
 }>()
- 
+
 const url = 'wss://' + location.host + '/api/_ws'
 const { send } = useWebSocket(url)
 const c = useCookie('has_answered', {
   maxAge: 60 * 60 * 24,
 })
 function submit(v: string) {
-  send(v) 
+  send(v)
   c.value = '1'
 }
 
