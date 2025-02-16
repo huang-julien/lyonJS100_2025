@@ -87,6 +87,9 @@ layout: intro
 
 # Qui a déjà utilisé Nuxt ou Vue ?
 
+
+<QrCodes />
+
 ---
 
 # Nuxt <logos-nuxt-icon /> C'est quoi ?
@@ -134,7 +137,7 @@ layout: intro
 
 <img  class="w-100 mx-auto rounded-xl" src="/assets/frameworks-everywhere.jpg"  />
 
-<iframe class="w-full h-full" src="https://dayssincelastjavascriptframework.com/" />
+<iframe class="w-full h-full" src="https://dayssincelastjsframework.com/" />
 
 </div>
 
@@ -250,6 +253,8 @@ layout: intro
 # Et NuxtJS dans tout ça ?
 
 ---
+clicks: 1
+---
 
 # Les Nuxt Islands
 
@@ -283,7 +288,7 @@ layout: intro
 ```html
 <template>
   <div>
-    <MyIsland />
+    <MyServerComponent />
   </div>
 </template>
 ```
@@ -365,10 +370,104 @@ layout: intro
 <Spacer />
 <Spacer />
 
+<div class="grid grid-cols-2">
 <div>
-<logos-nuxt-icon />
+<img src="/assets/nuxt_island_req.png" class="h-50 mx-auto"/>
+
 </div>
 
+<div>
+
+```ts twoslash
+// ---cut-start---
+interface NuxtIslandSlotResponse {
+  props: Array<unknown>
+  fallback?: string
+}
+
+interface NuxtIslandClientResponse {
+  html: string
+  props: unknown
+  chunk: string
+  slots?: Record<string, string>
+}
+type Head = any
+// ---cut-end---
+
+interface NuxtIslandResponse {
+  id?: string
+  html: string
+  head: Head
+  props?: Record<string, Record<string, any>>
+  components?: Record<string, NuxtIslandClientResponse>
+  slots?: Record<string, NuxtIslandSlotResponse>
+}
+
+```
+
+</div>
+</div>
+
+---
+
+# Vue fonctionne sur le principe du VDom
+
+
+<img src="/assets/render_pipeline.png" class="mx-auto " >
+
+---
+
+
+````md magic-move
+
+```ts
+
+{
+  type: 'div',
+  props: {
+    id: 'hello'
+  },
+  children: [
+    {
+      type: 'div',
+      children: [
+        {
+          type: 'div',
+          children: [
+            {
+              type: 'div',
+              children: [
+                /// ...
+              ]
+            },
+            'Hello Lyon JS 100 !'
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+```
+
+```ts
+
+{
+  type: 'NuxtIsland',
+  props: {
+    id: 'hello'
+  },
+  children: [
+    {
+      type: 'StaticVNode',
+      content: `<div><div/> Hello Lyon JS 100 !</div>`
+    }
+  ]
+}
+
+```
+
+````
 
 ---
 layout: intro
@@ -384,15 +483,20 @@ layout: intro
 
 ::window{filename="components/island/YourIsland.vue"}
 
-```ts twoslash
-// ---cut-start---
-import { useRuntimeConfig, useNuxtApp } from "nuxt/app"
-import { setResponseHeader } from "h3"
-// ---cut-end---
+```html
+<template>
+  <Expandable v-for="note in notes" :note="note">
+    <p>{{ note }}</p>
+  </Expandable>
+</template>
+
+<script setup lang="ts">
+
 const { somePrivateKey } = useRuntimeConfig()
+const notes = await db.notes.getAll();
 const { ssrContext } = useNuxtApp()
 setResponseHeader(ssrContext!.event, 'hello', 'LyonJS !')
-
+</script>
 ```
 
 ::
@@ -417,11 +521,7 @@ layout: intro
 
 ::window{filename="nuxt.config.ts"}
 
-```ts twoslash
-// ---cut-start---
-import { defineNuxtConfig } from "nuxt/config"
-// ---cut-end---
-
+```ts
 export default defineNuxtConfig({
   experimental: {
     // activé par défaut
@@ -429,23 +529,28 @@ export default defineNuxtConfig({
   }
 })
 ```
-
 ::
+
+```html
+<template>
+  <NuxtIsland name="AllNotes" id="some-id">
+    <NuxtLink to="/notes/some-id">
+      See note
+    </NuxtLink>
+  </NuxtIsland>
+</template>
+```
+
 
 ---
 
 # Charger des composants à l'intérieur des Islands
 
-## (oui, un peu comme sur Astro)
-
-### Statut: experimental
+#### Statut: experimental
 
 ::window{filename="nuxt.config.ts"}
 
-```ts twoslash
-// ---cut-start---
-import { defineNuxtConfig } from "nuxt/config"
-// ---cut-end---
+```ts
 export default defineNuxtConfig({
   experimental: {
     componentIslands: {
@@ -454,8 +559,37 @@ export default defineNuxtConfig({
   }
 })
 ```
-
 ::
+
+````md magic-move
+
+
+```md
+const notes = await db.notes.getAll();
+ 
+<Expandable v-for="note in notes" :note="note" client:load>
+  <p>{{ note }}</p>
+</Expandable>
+```
+
+```html
+<template>
+  <Expandable v-for="note in notes" :note="note" nuxt-client>
+    <p>{{ note }}</p>
+  </Expandable>
+</template>
+
+<script setup lang="ts">
+
+const { somePrivateKey } = useRuntimeConfig()
+const notes = await db.notes.getAll();
+const { ssrContext } = useNuxtApp()
+setResponseHeader(ssrContext!.event, 'hello', 'LyonJS !')
+</script>
+```
+
+````
+
 
 ---
 
