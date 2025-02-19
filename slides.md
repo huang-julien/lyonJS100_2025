@@ -95,14 +95,15 @@ layout: intro
 # Nuxt <logos-nuxt-icon /> C'est quoi ?
 
 - Meta-framework autour de VueJS et de NitroJS
-- Complètement hackable
-- Un démarrage 0 brain si vous connaissez déjà VueJS
+- Permet d'effectuer du rendu serveur d'application VueJS
+- Permet de générer un une application VueJS en statique
+- Prise en main ultra facile si vous connaissez déjà VueJS
 
 <NuxtTimeline v-click class="my-10 mx-auto" />
 
 <v-clicks>
  
-<v-drag-arrow pos="232,379,165,-134"/>
+<v-drag-arrow pos="232,379,179,-97"/>
 
 
 - Vue 2 à Vue 3
@@ -625,6 +626,10 @@ layout: intro
 # Est-ce que c'est le future ? 
 
 ---
+
+<img class="rounded-xl mx-auto"  src="/assets/no_hype.jpg" />
+
+---
 layout: intro
 ---
 
@@ -640,5 +645,3 @@ layout: intro
 <div>
 <logos-linkedin-icon /> julien-huang
 </div>
-
----
