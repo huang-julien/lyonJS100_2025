@@ -96,7 +96,7 @@ layout: intro
 
 - Meta-framework autour de VueJS et de NitroJS
 - Permet d'effectuer du rendu serveur d'application VueJS
-- Permet de générer un une application VueJS en statique
+- Permet de générer une application VueJS en statique
 - Prise en main ultra facile si vous connaissez déjà VueJS
 
 <NuxtTimeline v-click class="my-10 mx-auto" />
