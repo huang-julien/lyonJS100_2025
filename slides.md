@@ -645,3 +645,6 @@ layout: intro
 <div>
 <logos-linkedin-icon /> julien-huang
 </div>
+
+<FeedbackQrCode class="mx-auto mt-10" />
+ 

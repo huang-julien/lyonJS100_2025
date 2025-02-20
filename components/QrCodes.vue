@@ -1,14 +1,17 @@
 <template>
     <div class="grid grid-cols-3 gap-30 text-center">
         <div class="flex flex-col items-center">
+            Nuxt
             <img :src="nuxt" />
             {{ counts.nuxt }}
         </div>
         <div class="flex flex-col items-center">
+            Vue
             <img :src="vue" />
             {{ counts.vue }}
         </div>
         <div class="flex flex-col items-center">
+            Aucun
             <img :src="none" />
             {{ counts.none }}
         </div>
@@ -22,7 +25,6 @@ import { watch, ref } from 'vue'
 const host = 'localhost:3000'
 const tunnelHost = 'https://https://worth-indicator-the-wallpapers.trycloudflare.com/.trycloudflare.com'
 const url = ('ws://') + host + '/api/_ws'
-
 const nuxt = useQRCode(tunnelHost + '/?answer=nuxt')
 const vue = useQRCode(tunnelHost + '/?answer=vue')
 const none = useQRCode(tunnelHost + '/?answer=none')
